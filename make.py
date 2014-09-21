@@ -11,7 +11,7 @@ import jinja2
 import hashlib
 from pprint import pprint
 
-LOCAL_HOST = "http://localhost:8000"
+LOCAL_HOST = "http://162.209.109.31:8093/"
 BASE_PATH = os.path.abspath(os.path.dirname(__file__))
 
 CACHE = shelve.open("symbolab_cache")
@@ -110,7 +110,9 @@ def make_exercise(exercise_json):
         print(html.encode("utf8"), file=f)
 
     for problem in problems:
-        print(fname.replace(BASE_PATH, LOCAL_HOST) + ("?problem=%(exid)s\n\t%(query)s\n" % problem)) 
+        print('{}{}{}'.format(LOCAL_HOST,
+                              fname,
+                              "?problem=%(exid)s\n\t%(query)s\n" % problem))
 
     print("- Done (%s problems)" % len(problems))
 
