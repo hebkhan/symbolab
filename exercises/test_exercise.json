@@ -6,7 +6,7 @@
 
 	,"problems": [
 
-		,{
+		{
 			"instruction" : "solve by quadratic formula"
 			,"latex"	  : "x^3-x-6=0"
 		}
