@@ -1,0 +1,14 @@
+{
+	"title": "תרגילים באלגברה"
+
+	,"default_problem_title" : "פתרו את המשוואה הבאה: "
+	,"latex_buttons" : "fraction power power2 sqrt log"
+
+	,"problems": [
+
+		,{
+			"instruction" : "solve by quadratic formula"
+			,"latex"	  : "x^3-x-6=0"
+		}
+	]
+}
