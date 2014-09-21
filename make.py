@@ -1,0 +1,121 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+from __future__ import print_function
+
+import requests
+import sys
+import os.path
+import json
+import shelve
+import jinja2
+import hashlib
+from pprint import pprint
+
+LOCAL_HOST = "http://localhost:8000"
+BASE_PATH = os.path.abspath(os.path.dirname(__file__))
+
+CACHE = shelve.open("symbolab_cache")
+
+URL_SYMBOLAB = "http://www.scibug.com/steps"
+
+defaults = dict(flat="true", language="he", userId="khanIL")
+obfuscate = False
+
+def get_solution(query):
+
+    params = dict(query=query, **defaults)
+    key = repr(tuple(sorted(params.items())))
+
+    try:
+        return CACHE[key]
+    except KeyError:
+        pass
+
+    for i in range(20):
+        data = None
+        try:
+            print("Fetching from %s..." % key)
+            ret = requests.get(URL_SYMBOLAB, params=params)
+            ret.raise_for_status()
+            data = ret.json()
+            assert data['solutions']
+            data['problem'] = query
+            CACHE[key] = data
+            return data
+        except KeyError:
+            raise Exception("No solutions for '%s'" % query)
+        except ValueError:
+            raise
+        except Exception as e:
+            if data:
+                print(data.request.url)
+            print(i, e)
+            # import random
+            # gevent.sleep(random.randint(1, 30))
+            continue
+    raise
+
+
+import re
+RE_TEXT_EXTRACT = re.compile(r"(\\mathrm{[^}]+})")
+RE_TEXT = re.compile(r"\\mathrm{([^}]+)}")
+
+def latex(code):
+    def g():
+        for e in RE_TEXT_EXTRACT.split(code):
+            if not e:
+                continue
+            text = RE_TEXT.match(e)
+            if not text:
+                yield "<code>%s</code>" % e.replace(" ", "\\:")
+            else:
+                yield "<span>%s</span>" % text.group(1)
+    if not code:
+        return ""
+    return "&nbsp;".join(reversed(list(g())))
+
+
+def direction(code):
+    return "rtl" if "mathrm" in code else "ltr"
+
+
+def make_exercise(exercise_json):
+    problems = []
+    exercise = json.load(open(src))
+    problems = exercise['problems']
+    for problem in problems:
+        problem['query'] = query = " ".join([problem['instruction'], problem['latex']])
+        problem['exid'] = exid = "SYMB_" + hashlib.md5(query).hexdigest().upper()[:7]
+        solution = get_solution(query)
+
+        for k in "computesTo debugInfo".split():
+            solution.pop(k, None)
+        problem['solution'] = solution.pop('solutions')[0]
+        problem.setdefault('title', exercise['default_problem_title'])
+        problem.setdefault('latex_buttons', exercise['latex_buttons'])
+
+    name = os.path.splitext(os.path.split(src)[-1])[0]
+    fname = "./exercises/%s.html" % name
+
+    from jinja2 import Environment, FileSystemLoader
+    env = Environment(trim_blocks=True, lstrip_blocks=True, loader=FileSystemLoader("./"))
+    env.filters.update(latex=latex, direction=direction)
+
+    template = env.get_template("template.html")
+    html = template.render(exercise=exercise)
+    if obfuscate:
+        html = "".join(html.splitlines())
+
+    with open(fname, "w") as f:
+        print(html.encode("utf8"), file=f)
+
+    for problem in problems:
+        print(fname.replace(BASE_PATH, LOCAL_HOST) + ("?problem=%(exid)s\n\t%(query)s\n" % problem)) 
+
+    print("- Done (%s problems)" % len(problems))
+
+
+if __name__ == '__main__':
+    for src in sys.argv[1:]:
+        make_exercise(src)
+

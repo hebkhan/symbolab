@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html data-require="math math-format symbolab subhints">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>{{ exercise.title }}</title>
+        <script type="text/javascript" src="../khan-exercise.js"></script>
+    </head>
+    <body>
+        <div class="exercise">
+            <div class="problems"/>
+            {% for problem in exercise.problems %}
+                <div id="{{problem.exid}}">
+                    <p class="question">
+                        {{problem.title}}
+                    </p>
+                    <p class="problem">
+                        {{problem.latex|latex}}
+                    </p>
+                    <div class="solution" data-type="symbolab" data-buttons="{{problem.latex_buttons}}"></div>
+                    <div class="hints" style="direction:ltr">
+                        {% for step in problem.solution.steps %}
+                            {% if step.title %}
+                                <div style="direction:{{step.title.text.createdText|direction}}">
+                                    <p>{{step.title.text.createdText|latex}}
+                                        {% if step.general_rule %}
+                                        <br/><a href="#" class="show-subhint" data-subhint="subhint-{{ problem.exid }}-{{ loop.index }}">
+                                            [הסבר]
+                                        </a>
+                                        {% endif %}
+                                    </p>
+                                    {% if step.general_rule %}
+                                    <div id="subhint-{{ problem.exid }}-{{ loop.index }}"
+                                            class="subhint"
+                                            style="direction:{{step.general_rule.text.createdText|direction}}">
+                                        {{step.general_rule.text.createdText|latex}}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                            {% for explanation in step.explanation %}
+                                <div style="direction:{{explanation.createdText|direction}}">
+                                    <p>{{explanation.createdText|latex}}</p>
+                                </div>
+                            {% endfor %}
+                            {% if (not step.isAddEquals) %}
+                                <div style="direction:{{step.entire_result|direction}}">
+                                    <p>{{step.entire_result|latex}}</p>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+            {% endfor %}
+            </div>
+        </div>
+    </body>
+</html>
