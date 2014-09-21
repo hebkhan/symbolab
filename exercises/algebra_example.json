@@ -34,7 +34,7 @@
 
 		,{
 			"instruction" : "solve by factoring"
-			,"latex"	  : "0=-5x^2+10x"
+			,"latex"	  : "-5x^2+10x=0"
 		}
 
 		,{
