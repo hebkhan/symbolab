@@ -14,7 +14,10 @@ from pprint import pprint
 LOCAL_HOST = "http://162.209.109.31:8093/"
 BASE_PATH = os.path.abspath(os.path.dirname(__file__))
 
+CACHE_VERSION = 0
 CACHE = shelve.open("symbolab_cache")
+if CACHE.get("VERSION", 0) < CACHE_VERSION:
+    CACHE.clear()
 
 URL_SYMBOLAB = "http://www.scibug.com/steps"
 
@@ -101,23 +104,30 @@ def make_exercise(exercise_json):
     env = Environment(trim_blocks=True, lstrip_blocks=True, loader=FileSystemLoader("./"))
     env.filters.update(latex=latex, direction=direction)
 
-    template = env.get_template("template.html")
+    template_name = exercise.get("template", "template.html")
+    template = env.get_template(template_name)
     html = template.render(exercise=exercise)
     if obfuscate:
         html = "".join(html.splitlines())
 
     with open(fname, "w") as f:
+        print("Writing %s" % fname)
         print(html.encode("utf8"), file=f)
 
     for problem in problems:
-        print('{}{}{}'.format(LOCAL_HOST,
-                              fname,
-                              "?problem=%(exid)s\n\t%(query)s\n" % problem))
+        print('%(host)s%(url)s?problem=%(exid)s\n\t%(query)s\n' % dict(problem, host=LOCAL_HOST, url=fname))
 
     print("- Done (%s problems)" % len(problems))
 
 
 if __name__ == '__main__':
+    errors = 0
     for src in sys.argv[1:]:
-        make_exercise(src)
-
+        try:
+            print(src.center(80), "-")
+            make_exercise(src)
+            print("\n\n")
+        except Exception, e:
+            sys.excepthook(*sys.exc_info())
+            errors += 1
+    sys.exit(errors)
