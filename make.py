@@ -124,7 +124,7 @@ if __name__ == '__main__':
     errors = 0
     for src in sys.argv[1:]:
         try:
-            print(src.center(80), "-")
+            print(src.center(80), "=")
             make_exercise(src)
             print("\n\n")
         except Exception, e:
