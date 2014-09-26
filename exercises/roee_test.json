@@ -2,7 +2,7 @@
 	"title": "כפל שברים אלגבריים"
 
 	,"default_problem_title" : "כפלו את השברים הבאים, צמצמו במידת האפשר:"
-	,"latex_buttons" : "fraction power power2 sqrt"
+	,"latex_buttons" : "fraction power power2"
 
 	,"problems": [
 
