@@ -1,0 +1,31 @@
+{
+	"title": "כפל שברים אלגבריים"
+
+	,"default_problem_title" : "כפלו את השברים הבאים, צמצמו במידת האפשר:"
+	,"latex_buttons" : "fraction power power2 sqrt"
+
+	,"problems": [
+
+		{
+			"instruction" : "simplify"
+			,"latex" : "\\frac{x^2+14x+49}{3x^3}\\cdot \\frac{9x^4}{x^2+7x}"
+		}
+	
+		,{
+			"instruction" : "simplify"
+			,"latex" : "\\frac{x^2+12x+36}{2x^3}\\cdot \\frac{4x^4}{x^2+6x}"
+		}
+
+		,{
+			"instruction" : "simplify"
+			,"latex" : "\\frac{x^2+10x+25}{4x^3}\\cdot \\frac{8x^4}{x^2+5x}"
+		}
+
+		,{
+			"instruction" : "simplify"
+			,"latex" : "\\frac{x^2+8x+16}{3x^3}\\cdot \\frac{6x^4}{x^2+4x}"
+		}
+
+
+	]
+}
