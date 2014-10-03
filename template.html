@@ -24,21 +24,31 @@
                         {% for step in problem.solution.steps %}
                             {% if step.title %}
                                 <div style="direction:{{step.title.text.createdText|direction}}">
-                                    <p>{{step.title.text.createdText|latex}}
-                                        {% if step.general_rule or step.isInterimStep %}
-                                        <br/><a href="#" class="show-subhint" data-subhint="subhint-{{ problem.exid }}-{{ loop.index }}">
-                                            [הסבר]
-                                        </a>
-                                        {% endif %}
-                                    </p>
                                     {% if step.general_rule %}
-                                    <div id="subhint-{{ problem.exid }}-{{ loop.index }}"
-                                            class="subhint"
-                                            style="direction:{{step.general_rule.text.createdText|direction}}">
-                                        {{step.general_rule.text.createdText|latex}}
-                                    </div>
-                                    {% elif step.isInterimStep %}
-                                    <div id="subhint-{{ problem.exid }}-{{ loop.index }}" class="subhint">
+                                    <p>
+                                        <a href="#" class="show-definition" data-definition="subhint-{{ problem.exid }}-{{ loop.index }}">
+                                            <b>{{step.title.text.createdText|latex}}</b>
+                                        </a>
+                                        <div id="subhint-{{ problem.exid }}-{{ loop.index }}"
+                                                class="subhint"
+                                                style="direction:{{step.general_rule.text.createdText|direction}}">
+                                            {{step.general_rule.text.createdText|latex}}
+                                        </div>
+                                    </p>
+                                    {% else %}
+                                        <p>{{step.title.text.createdText|latex}}</p>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                            {% if step.isInterimStep %}
+                                {% set last_substep = step.steps[-1] %}
+                                <div>
+                                    <p style="direction:{{last_substep.entire_result|direction}}">
+                                        <a href="#" class="show-definition" data-definition="interim-{{ problem.exid }}-{{ loop.index }}">
+                                            <b>{{last_substep.entire_result|latex}}</b>
+                                        </a>
+                                    </p>
+                                    <div id="interim-{{ problem.exid }}-{{ loop.index }}" class="subhint">
                                         {% for substep in step.steps %}
                                             {% if not loop.first %} <hr class="thin"> {% endif %}
                                             <div>
@@ -53,15 +63,6 @@
                                             </div>
                                         {% endfor %}
                                     </div>
-                                    {% endif %}
-                                </div>
-                            {% endif %}
-                            {% if step.isInterimStep %}
-                                {% set last_substep = step.steps[-1] %}
-                                <div>
-                                    <p style="direction:{{last_substep.entire_result|direction}}">
-                                        {{last_substep.entire_result|latex}}
-                                    </p>
                                 </div>
                             {% endif %}
                             {% for explanation in step.explanation %}
