@@ -4,6 +4,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>{{ exercise.title }}</title>
         <script type="text/javascript" src="../khan-exercise.js"></script>
+        <style type="text/css">
+            .problem { font-size: 150%; text-align: center; }
+        </style>
     </head>
     <body>
         <div class="exercise">
@@ -22,7 +25,7 @@
                             {% if step.title %}
                                 <div style="direction:{{step.title.text.createdText|direction}}">
                                     <p>{{step.title.text.createdText|latex}}
-                                        {% if step.general_rule %}
+                                        {% if step.general_rule or step.isInterimStep %}
                                         <br/><a href="#" class="show-subhint" data-subhint="subhint-{{ problem.exid }}-{{ loop.index }}">
                                             [הסבר]
                                         </a>
@@ -34,7 +37,31 @@
                                             style="direction:{{step.general_rule.text.createdText|direction}}">
                                         {{step.general_rule.text.createdText|latex}}
                                     </div>
+                                    {% elif step.isInterimStep %}
+                                    <div id="subhint-{{ problem.exid }}-{{ loop.index }}" class="subhint">
+                                        {% for substep in step.steps %}
+                                            {% if not loop.first %} <hr class="thin"> {% endif %}
+                                            <div>
+                                                {% if substep.title %}
+                                                    <p style="direction:{{substep.title.text.createdText|direction}}">
+                                                        {{substep.title.text.createdText|latex}}
+                                                    </p>
+                                                {% endif %}
+                                                <p style="direction:{{substep.entire_result|direction}}">
+                                                    {{substep.entire_result|latex}}
+                                                </p>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
                                     {% endif %}
+                                </div>
+                            {% endif %}
+                            {% if step.isInterimStep %}
+                                {% set last_substep = step.steps[-1] %}
+                                <div>
+                                    <p style="direction:{{last_substep.entire_result|direction}}">
+                                        {{last_substep.entire_result|latex}}
+                                    </p>
                                 </div>
                             {% endif %}
                             {% for explanation in step.explanation %}
