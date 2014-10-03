@@ -8,7 +8,12 @@
 
 		{
 			"instruction" : "simplify"
-			,"latex" : "\\frac{x^2+14x+49}{3x^3}\\cdot \\frac{9x^4}{x^2+7x}"
+			,"latex" : "\\frac{x^2+[2*A]x+[A^2]}{[B]x^3}\\cdot \\frac{[B^2]x^4}{x^2+[A]x}"
+			,"vars" : {
+				"A" : [1, 10]
+				,"B" : [3, 5]
+			}
+			,"samples" : 15
 		}
 	
 		,{

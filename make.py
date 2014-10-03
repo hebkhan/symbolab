@@ -9,20 +9,23 @@ import json
 import shelve
 import jinja2
 import hashlib
+import itertools
+import random
 from pprint import pprint
 
 LOCAL_HOST = "http://162.209.109.31:8093/"
 BASE_PATH = os.path.abspath(os.path.dirname(__file__))
 
-CACHE_VERSION = 0
+CACHE_VERSION = 2
 CACHE = shelve.open("symbolab_cache")
 if CACHE.get("VERSION", 0) < CACHE_VERSION:
     CACHE.clear()
+    CACHE["VERSION"] = CACHE_VERSION
 
 URL_SYMBOLAB = "http://www.scibug.com/steps"
 
 defaults = dict(flat="true", language="he", userId="khanIL")
-obfuscate = False
+obfuscate = True
 
 def get_solution(query):
 
@@ -39,6 +42,7 @@ def get_solution(query):
         try:
             print("Fetching from %s..." % key)
             ret = requests.get(URL_SYMBOLAB, params=params)
+            print("Fetched: %s" % ret.url)
             ret.raise_for_status()
             data = ret.json()
             assert data['solutions']
@@ -82,11 +86,47 @@ def direction(code):
     return "rtl" if "mathrm" in code else "ltr"
 
 
+
+RE_VAR = re.compile(r"\[([\w^*/+-.]*)\]")
+def make_problem(latex, vardict):
+    def sub(expr):
+        expr, = expr.groups()
+        ret = str(eval(expr.replace("^", "**"), {}, vardict))
+        # print(expr, "-->", ret)
+        return ret
+    ret = RE_VAR.sub(sub, latex)
+    print("\t %s \t--> %s" % (vardict, ret))
+    return ret
+
+
+def expand_problems(problems):
+    for problem in problems:
+        variables = problem.pop("vars", None)
+        if not variables:
+            yield dict(problem)
+            continue
+        latex = problem.pop('latex')
+        print("Expanding: ", latex)
+        for k, v in variables.items():
+            if len(v)==2:
+                variables[k] = xrange(v[0], v[1]+1)
+        keys = variables.keys()
+        samples = problem.pop("samples", False)
+        permutations = itertools.product(*variables.itervalues())
+        if samples:
+            permutations = random.sample(list(permutations), samples)
+        for values in permutations:
+            d = dict(zip(map(str, keys), values))
+            sub_problem = dict(problem)
+            sub_problem['latex'] = make_problem(latex, d)
+            yield sub_problem
+
+
 def make_exercise(exercise_json):
     problems = []
     exercise = json.load(open(src))
-    problems = exercise['problems']
-    for problem in problems:
+    problems = []
+    for problem in expand_problems(exercise.pop('problems')):
         problem['query'] = query = " ".join([problem['instruction'], problem['latex']])
         problem['exid'] = exid = "SYMB_" + hashlib.md5(query).hexdigest().upper()[:7]
         solution = get_solution(query)
@@ -96,6 +136,8 @@ def make_exercise(exercise_json):
         problem['solution'] = solution.pop('solutions')[0]
         problem.setdefault('title', exercise['default_problem_title'])
         problem.setdefault('latex_buttons', exercise['latex_buttons'])
+        problems.append(problem)
+    exercise['problems'] = problems
 
     name = os.path.splitext(os.path.split(src)[-1])[0]
     fname = "./exercises/%s.html" % name
@@ -127,7 +169,7 @@ if __name__ == '__main__':
             print("\n\n")
             print(("=[ %s ]=" % src).center(80, "-"))
             make_exercise(src)
-        except Exception, e:
+        except Exception as e:
             sys.excepthook(*sys.exc_info())
             errors += 1
     sys.exit(errors)
