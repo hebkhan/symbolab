@@ -6,6 +6,21 @@
         <script type="text/javascript" src="../khan-exercise.js"></script>
         <style type="text/css">
             .problem { font-size: 150%; text-align: center; }
+            .show-definition { text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5); }
+            .general-rule {
+                border: 1px solid #aaaaaa;
+                background: #f9f9f9;
+                display: inline;
+                -moz-border-radius: 4px;
+                -webkit-border-radius: 4px;
+                border-radius: 4px;
+                margin-right: 20px;
+                margin-left: 20px;
+                padding: 10px;
+            }
+            #hintsarea > div {
+                border-top: 1px dashed #DDD;
+            }
         </style>
     </head>
     <body>
@@ -24,28 +39,22 @@
                         {% for step in problem.solution.steps %}
                             {% if step.title %}
                                 <div style="direction:{{step.title.text.createdText|direction}}">
-                                    {% if step.general_rule %}
                                     <p>
-                                        <a href="#" class="show-definition" data-definition="subhint-{{ problem.exid }}-{{ loop.index }}">
-                                            <b>{{step.title.text.createdText|latex}}</b>
-                                        </a>
-                                        <div id="subhint-{{ problem.exid }}-{{ loop.index }}"
-                                                class="subhint"
-                                                style="direction:{{step.general_rule.text.createdText|direction}}">
+                                    {{step.title.text.createdText|latex}}
+                                    {% if step.general_rule %}
+                                        <span class="general-rule" style="direction:{{step.general_rule.text.createdText|direction}}">
                                             {{step.general_rule.text.createdText|latex}}
-                                        </div>
-                                    </p>
-                                    {% else %}
-                                        <p>{{step.title.text.createdText|latex}}</p>
+                                        </span>
                                     {% endif %}
+                                    </p>
                                 </div>
                             {% endif %}
                             {% if step.isInterimStep %}
                                 {% set last_substep = step.steps[-1] %}
                                 <div>
                                     <p style="direction:{{last_substep.entire_result|direction}}">
-                                        <a href="#" class="show-definition" data-definition="interim-{{ problem.exid }}-{{ loop.index }}">
-                                            <b>{{last_substep.entire_result|latex}}</b>
+                                        <a class="show-definition hint_blue" data-definition="interim-{{ problem.exid }}-{{ loop.index }}">
+                                            <strong>{{last_substep.entire_result|latex}}</strong>
                                         </a>
                                     </p>
                                     <div id="interim-{{ problem.exid }}-{{ loop.index }}" class="subhint">

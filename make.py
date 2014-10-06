@@ -25,7 +25,7 @@ if CACHE.get("VERSION", 0) < CACHE_VERSION:
 URL_SYMBOLAB = "http://www.scibug.com/steps"
 
 defaults = dict(flat="true", language="he", userId="khanIL")
-obfuscate = True
+obfuscate = False
 
 def get_solution(query):
 
