@@ -19,7 +19,7 @@
 		
 		,{
 			"instruction" : "simplify"
-			,"latex" : "\\frac{[2*A]x+A}{[A]x^2-[A*B]x}\\cdot \\frac{x^2+[C-B]x-[B*C]}{5x+[5*C]}"
+			,"latex" : "\\frac{[2*A]x+[A]}{[A]x^2-[A*B]x}\\cdot \\frac{x^2+[C-B]x-[B*C]}{5x+[5*C]}"
 			,"vars" : {
 				"A" : [1, 10]
 				,"B" : [2, 5]
