@@ -1,0 +1,25 @@
+{
+	"title": "צמצום שברים על ידי פירוק לגורמים"
+
+	,"default_problem_title" : "פשטו את הביטוי הבא:"
+	,"latex_buttons" : "fraction power power2"
+
+	,"problems": [
+
+		{
+			"instruction" : "simplify"
+			,"latex" : "\\frac{[A]x^2+[A*[B-C]x-[A*B*C]}{x+[B]}\\"
+			,"vars" : {
+				"A" : [2, 10]
+				,"B" : [2, 10]
+				,"C" : [2, 10]
+			}
+			,"samples" : 20
+		}
+	
+		
+		
+
+		
+	]
+}
