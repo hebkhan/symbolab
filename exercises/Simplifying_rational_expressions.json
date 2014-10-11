@@ -14,7 +14,7 @@
 				,"B" : [2, 10]
 				,"C" : [2, 10]
 			}
-			,"samples" : 20
+			,"samples" : 10
 		}
 	
 		,{
@@ -25,10 +25,30 @@
 				,"B" : [2, 5]
 				,"C" : [2, 5]
 			}
-			,"samples" : 20
+			,"samples" : 10
 		}	
-		
+			
+		,{
+			"instruction" : "simplify"
+			,"latex" : "\\frac{x^2+[A-B]x-[A*B]}{x^2-[B]x}\\"
+			,"vars" : {
+				"A" : [2, 10]
+				,"B" : [2, 10]
+			}
+			,"samples" : 10
+		}	
 
-		
+
+		,{
+			"instruction" : "simplify"
+			,"latex" : "\\frac{-[A]x^2-[A*B-A*C]x+[A*B*C]}{x^3+[B-D]x^2-[B*D]x}\\"
+			,"vars" : {
+				"A" : [2, 10]
+				,"B" : [2, 5]
+				,"C" : [2, 5]
+				,"D" : [2, 5]
+			}
+			,"samples" : 10
+		}	
 	]
 }
