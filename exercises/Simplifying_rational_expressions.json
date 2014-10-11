@@ -8,7 +8,7 @@
 
 		{
 			"instruction" : "simplify"
-			,"latex" : "\\frac{[A]x^2+[A*(B-C)]x-[A*B*C]}{x+[B]}\\"
+			,"latex" : "\\frac{[A]x^2+[A*{B-C}]x-[A*B*C]}{x+[B]}\\"
 			,"vars" : {
 				"A" : [2, 10]
 				,"B" : [2, 10]
