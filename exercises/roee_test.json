@@ -31,7 +31,12 @@
 
 		,{
 			"instruction" : "simplify"
-			,"latex" : "\\frac{x^2+12x+36}{36-x^2}\\cdot \\frac{6x^2-x^3}{x^2+3x-18}"
+			,"latex" : "\\frac{x^2+[2*A]x+[A^2]}{[A^2]-x^2}\\cdot \\frac{[A]x^2-x^3}{x^2+[A-B]x-[A*B]}"
+			,"vars" : {
+				"A" : [2, 10]
+				,"B" : [2, 10]
+			}
+			,"samples" : 10
 		}
 
 		
