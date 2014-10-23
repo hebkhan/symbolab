@@ -1,18 +1,20 @@
 {
 	"title": "חילוק שברים אלגבריים"
 
-	,"default_problem_title" : "פשטו את הביטוי הבא במידת האפשר. בכל התרגילים המונה שונה מאפס"
+	,"default_problem_title" : "פשטו את הביטוי הבא במידת האפשר. בכל התרגילים המכנה שונה מאפס"
 	,"latex_buttons" : "fraction power power2"
 
 	,"problems": [
 
 		{
 			"instruction" : "simplify"
-			,"latex" : "\\frac{\\frac{a^2-b^2}{x+[A]}}{\\frac{ab+b^2}{x+[A]}}"
+			,"latex" : "\\frac{\\frac{[B]^2-[C]^2}{x+[A]}}{\\frac{[B*C]+[C]^2}{x+[A]}}"
 			,"vars" : {
 				"A" : [2, 10]
+				,"B" : [2, 10]
+				,"C" : [2, 10]
 			}
-			,"samples" : 5
+			,"samples" : 10
 		}
 	
 	]
