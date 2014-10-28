@@ -87,7 +87,7 @@ def direction(code):
 
 
 
-RE_VAR = re.compile(r"\[([\w^*/+-.]*)\]")
+RE_VAR = re.compile(r"\[([\w^*/+-.\(\)]*)\]")
 def make_problem(latex, vardict):
     def sub(expr):
         expr, = expr.groups()
