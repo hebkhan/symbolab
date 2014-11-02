@@ -156,7 +156,7 @@ def make_exercise(src, tgt):
         print(html.encode("utf8"), file=f)
 
     for problem in problems:
-        print('%(host)s%(url)s?problem=%(exid)s\n\t%(query)s\n' % dict(problem, host=LOCAL_HOST, url=tgt))
+        print('%(host)s/exercises/%(url)s?problem=%(exid)s\n\t%(query)s\n' % dict(problem, host=LOCAL_HOST, url=basename(tgt)))
 
     print("- Done (%s problems)" % len(problems))
 
