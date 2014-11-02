@@ -4,7 +4,9 @@ from __future__ import print_function
 
 import requests
 import sys
+from os.path import basename, splitext, join, exists
 import os.path
+import argparse
 import json
 import shelve
 import jinja2
@@ -122,7 +124,7 @@ def expand_problems(problems):
             yield sub_problem
 
 
-def make_exercise(exercise_json):
+def make_exercise(src, tgt):
     problems = []
     exercise = json.load(open(src))
     problems = []
@@ -139,11 +141,8 @@ def make_exercise(exercise_json):
         problems.append(problem)
     exercise['problems'] = problems
 
-    name = os.path.splitext(os.path.split(src)[-1])[0]
-    fname = "./exercises/%s.html" % name
-
     from jinja2 import Environment, FileSystemLoader
-    env = Environment(trim_blocks=True, lstrip_blocks=True, loader=FileSystemLoader("./"))
+    env = Environment(trim_blocks=True, lstrip_blocks=True, loader=FileSystemLoader(BASE_PATH))
     env.filters.update(latex=latex, direction=direction)
 
     template_name = exercise.get("template", "template.html")
@@ -152,24 +151,41 @@ def make_exercise(exercise_json):
     if obfuscate:
         html = "".join(html.splitlines())
 
-    with open(fname, "w") as f:
-        print("Writing %s" % fname)
+    with open(tgt, "w") as f:
+        print("Writing %s" % tgt)
         print(html.encode("utf8"), file=f)
 
     for problem in problems:
-        print('%(host)s%(url)s?problem=%(exid)s\n\t%(query)s\n' % dict(problem, host=LOCAL_HOST, url=fname))
+        print('%(host)s%(url)s?problem=%(exid)s\n\t%(query)s\n' % dict(problem, host=LOCAL_HOST, url=tgt))
 
     print("- Done (%s problems)" % len(problems))
 
 
-if __name__ == '__main__':
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("source", nargs="+", help="The exercise json files to make")
+    parser.add_argument("--target", default="./exercises/", help="Target path for exercises")
+    parser.add_argument("--overwrite", action="store_true", help="Overwrite existing exercises")
+    args = parser.parse_args()
+
     errors = 0
-    for src in sys.argv[1:]:
+    for src in args.source:
+        tgt = "%s.html" % splitext(basename(src))[0]
+        tgt = join(args.target, tgt)
+        if exists(tgt) and not args.overwrite:
+            print("Skipping existing exercise: %s" % tgt)
+            continue
+
         try:
-            print("\n\n")
+            print("\n")
             print(("=[ %s ]=" % src).center(80, "-"))
-            make_exercise(src)
+            make_exercise(src, tgt)
+            print("\n")
         except Exception as e:
             sys.excepthook(*sys.exc_info())
             errors += 1
+
     sys.exit(errors)
+
+if __name__ == '__main__':
+    main()
