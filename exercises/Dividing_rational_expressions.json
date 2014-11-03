@@ -8,10 +8,22 @@
 
 		{
 			"instruction" : "simplify"
-			,"latex" : "\\frac{\\frac{[B^2]-x^2}{x+[A]}}{\\frac{[B]x+x^2}{x+[A]}}"
+			,"latex" : "\\frac{\\frac{x^2-[B^2]}{x+[A]}}{\\frac{[B]x+x^2}{x+[A]}}"
 			,"vars" : {
 				"A" : [2, 10]
 				,"B" : [2, 10]
+			
+			}
+			,"samples" : 10
+		}
+		
+		,{
+			"instruction" : "simplify"
+			,"latex" : "\\frac{\\frac{[A]x-[A^2]}{[B]x+[C*B]}}{\\frac{x^2-[2*A]x+[A^2]}{x+[C]}}"
+			,"vars" : {
+				"A" : [2, 10]
+				,"B" : [2, 10]
+				,"C" : [2, 10]
 			
 			}
 			,"samples" : 10
