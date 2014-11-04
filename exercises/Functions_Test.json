@@ -18,7 +18,7 @@
 	
 		,{
 			"instruction" : "solve by factoring"
-			,"latex" : "[A]x^2=[B^2]"
+			,"latex" : "[A]x^2=[A*B^2]"
 			,"vars" : {
 				"A" : [2, 10]
 				,"B" : [2, 10]
