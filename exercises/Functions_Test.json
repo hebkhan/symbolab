@@ -1,0 +1,31 @@
+{
+	"title": "פתרון פונקציות ריבועיות"
+
+	,"default_problem_title" : "פתרון את המשוואה הבאה:"
+	,"latex_buttons" : "fraction power power2"
+
+	,"problems": [
+
+		{
+			"instruction" : "solve by factoring"
+			,"latex" : "x^2=[A^2]"
+			,"vars" : {
+				"A" : [2, 10]
+				
+			}
+			,"samples" : 5
+		}
+	
+		,{
+			"instruction" : "solve by factoring"
+			,"latex" : "[A]x^2=[B^2]"
+			,"vars" : {
+				"A" : [2, 10]
+				,"B" : [2, 10]
+				
+			}
+			,"samples" : 5
+		}	
+
+	]
+}
