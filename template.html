@@ -6,7 +6,7 @@
         <script type="text/javascript" src="../khan-exercise.js"></script>
         <style type="text/css">
             .problem { font-size: 150%; text-align: center; }
-            .show-definition { text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5); }
+            .show-subhint { text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5); }
             .general-rule {
                 border: 1px solid #aaaaaa;
                 background: #f9f9f9;
@@ -53,7 +53,7 @@
                                 {% set last_substep = step.steps[-1] %}
                                 <div>
                                     <p style="direction:{{last_substep.entire_result|direction}}">
-                                        <a class="show-definition hint_blue" data-definition="interim-{{ problem.exid }}-{{ loop.index }}">
+                                        <a href="#" class="show-subhint hint_blue" data-hidden-text="[הסתר הסבר]" data-subhint="interim-{{ problem.exid }}-{{ loop.index }}">
                                             <strong>{{last_substep.entire_result|latex}}</strong>
                                         </a>
                                     </p>
