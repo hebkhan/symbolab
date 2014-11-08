@@ -59,7 +59,9 @@
                                     </p>
                                     <div id="interim-{{ problem.exid }}-{{ loop.index }}" class="subhint">
                                         {% for substep in step.steps %}
-                                            {% if not loop.first %} <hr class="thin"> {% endif %}
+                                            {% if not loop.first %}
+                                            <hr class="thin"/>
+                                            {% endif %}
                                             <div>
                                                 {% if substep.title %}
                                                     <p style="direction:{{substep.title.text.createdText|direction}}">

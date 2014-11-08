@@ -76,7 +76,10 @@ def latex(code):
                 continue
             text = RE_TEXT.match(e)
             if not text:
-                yield "<code>%s</code>" % e.replace(" ", "\\:")
+                e = e.replace(" ", "\\:") \
+                     .replace("<", " < ") \
+                     .replace(">", " > ")
+                yield "<code>%s</code>" % e
             else:
                 yield "<span>%s</span>" % text.group(1)
     if not code:
