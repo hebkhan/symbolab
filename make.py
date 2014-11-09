@@ -116,9 +116,10 @@ def expand_problems(problems):
             if len(v)==2:
                 variables[k] = xrange(v[0], v[1]+1)
         keys = variables.keys()
-        samples = problem.pop("samples", False)
         permutations = itertools.product(*variables.itervalues())
+        samples = problem.pop("samples", False)
         if samples:
+            random.seed(problem.pop("seed", latex))  # use the problem's latex as seed
             permutations = random.sample(list(permutations), samples)
         for values in permutations:
             d = dict(zip(map(str, keys), values))
