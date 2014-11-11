@@ -1,0 +1,25 @@
+{
+	"title": "פתרון גרפי של משוואה ריבועית 3"
+
+	,"default_problem_title" : "פתרו את המשוואה הבאה. ניתן לאחר מכן לצפות בגרף הפתרון דרך הרמזים"
+	,"latex_buttons" : "fraction power power2"
+
+	,"problems": [
+
+		{
+			"instruction" : "solve by complete the square"
+			,"latex" : "[B]x^2+[C]=[B*A^2+C]"
+			,"vars" : {
+				"A" : [0, 10]
+				,"B" : [2, 10]
+				,"C" : [0, 10]
+				
+			}
+			,"samples" : 10
+		}
+		
+		
+		
+
+	]
+}
