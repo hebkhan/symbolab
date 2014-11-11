@@ -19,36 +19,15 @@
 		
 		,{
 			"instruction" : "solve by factoring"
-			,"latex" : "[B]x^2=[-B*A^2]"
+			,"latex" : "[A]x^2=[B]x^2"
 			,"vars" : {
-				"A" : [0, 10]
+				"A" : [1, 10]
 				,"B" : [1, 10]
 				
 			}
 			,"samples" : 10
 		}
 		
-		,{
-			"instruction" : "solve by factoring"
-			,"latex" : "[-B]x^2=[-B*A^2]"
-			,"vars" : {
-				"A" : [0, 10]
-				,"B" : [1, 10]
-				
-			}
-			,"samples" : 10
-		}
-		
-			,{
-			"instruction" : "solve by factoring"
-			,"latex" : "[-B]x^2=[B*A^2]"
-			,"vars" : {
-				"A" : [0, 10]
-				,"B" : [1, 10]
-				
-			}
-			,"samples" : 10
-		}
 
 	]
 }
