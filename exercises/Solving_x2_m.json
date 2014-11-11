@@ -1,7 +1,7 @@
 {
 	"title": "פתרון גרפי של משוואה ריבועית 1 "
 
-	,"default_problem_title" : "פתרון את המשוואה הבאה. ניתן לאחר מכן לצפות בגרף הפתרון דרך הרמזים"
+	,"default_problem_title" : "פתרו את המשוואה הבאה. ניתן לאחר מכן לצפות בגרף הפתרון דרך הרמזים"
 	,"latex_buttons" : "fraction power power2"
 
 	,"problems": [
@@ -10,12 +10,21 @@
 			"instruction" : "solve by factoring"
 			,"latex" : "x^2=[A^2]"
 			,"vars" : {
-				"A" : [-10, 10]
+				"A" : [0, 10]
 				
 			}
 			,"samples" : 10
 		}
-	
+		
+		,{
+			"instruction" : "solve by factoring"
+			,"latex" : "x^2=[-A^2]"
+			,"vars" : {
+				"A" : [0, 10]
+				
+			}
+			,"samples" : 10
+		}
 
 	]
 }
