@@ -21,8 +21,8 @@
 			"instruction" : "solve by complete the square"
 			,"latex" : "[A]x^2=[B]x^2"
 			,"vars" : {
-				"A" : [2, 10]
-				,"B" : [2, 10]
+				"A" : [2, 5]
+				,"B" : [6, 10]
 				
 			}
 			,"samples" : 10
