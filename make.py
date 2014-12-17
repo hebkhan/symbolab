@@ -18,7 +18,7 @@ from pprint import pprint
 LOCAL_HOST = "http://162.209.109.31:8093/"
 BASE_PATH = os.path.abspath(os.path.dirname(__file__))
 
-CACHE_VERSION = 3
+CACHE_VERSION = 4
 CACHE = shelve.open("symbolab_cache")
 if CACHE.get("VERSION", 0) < CACHE_VERSION:
     CACHE.clear()
